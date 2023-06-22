@@ -17,19 +17,40 @@ from turtle import __forwardmethods
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageTk
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logging.basicConfig(level=logging.ERROR, format="%(levelname)s: %(message)s")
+
+#dataset selection:
+
+#set1
+
+setlist = {
+    0: "test",
+    1:  "picanol_sabrina_pro"}
+
+#code for GUI
+"""selected_set = "picanol_sabrina_pro"
+# code to return key for any value
+selected_key = [key for key in setlist if setlist[key] == selected_set]
+selected_key = selected_key[0]"""
+
+#debug code:
+selected_key = 1
+
+
+
+datadict={0: r"C:\Python\github\image-to-coco-json-converter\dataset\train", 1: r"C:\dataset_inspect40\picanol_sabrina_pro\full_size\images"}
+jsondict={0: r"C:\Python\github\image-to-coco-json-converter\output\train.json", 1: r"C:\dataset_inspect40\picanol_sabrina_pro\full_size\masks_png_colorized\masks.json"}
+
+datapath = datadict[selected_key]
+jsonpath = jsondict[selected_key]
+
 
 parser = argparse.ArgumentParser(description="View images with bboxes from the COCO dataset")
-parser.add_argument("-i", "--images", default="", type=str, metavar="PATH", help="path to images folder")
-parser.add_argument(
-    "-a",
-    "--annotations",
-    default="",
-    type=str,
-    metavar="PATH",
-    help="path to annotations json file",
-)
-
+parser.add_argument("-m", "--mode", default="bbox", type=str, metavar="bbox", help="mode to view images")
+parser.add_argument("-p", "--port", default=52370, type=int, metavar="52370", help="port to run the server on")
+parser.add_argument("-i", "--images", default=datapath, type=str, metavar="PATH", help="path to images folder")
+parser.add_argument("-a", "--annotations", default=jsonpath, type=str, metavar="PATH", help="path to annotations json file",)
+args = parser.parse_args()
 
 class Data:
     """Handles data related stuff."""
@@ -895,4 +916,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
